@@ -9,7 +9,6 @@ import sys, os
 import click
 from datetime import datetime as dt
 
-default_file = dt.now().strftime("%Y%m%dT%H%M%S") + ".parquet"
 debug = 'DEBUG' in os.environ
 
 @click.group()
@@ -17,11 +16,12 @@ def cli() -> None:
     pass
 
 @cli.command()
-@click.option("--file", "-f", default=default_file)
+@click.option("--file", "-f")
 @click.option("--number", "-n", default=10)
 def generate(file, number):
+    if not file:
+        file = dt.now().strftime("%Y%m%dT%H%M%S") + ".parquet"
     record = gendata.get(number)
-    
     df = pd.read_json(record, orient ='index')
     print(df)
     dprint(df.to_json())
@@ -31,7 +31,7 @@ def generate(file, number):
 
 @cli.command()
 @click.option("--table_id", "-t", required=True)
-@click.option("--file", "-f", default=default_file, required=True)
+@click.option("--file", "-f", required=True)
 def put(file, table_id):
     from google.cloud import bigquery
     import re

@@ -4,10 +4,12 @@ import pyarrow as pa
 import pandas as pd
 import pyarrow
 import json
-import gendata
 import sys, os
 import click
 from datetime import datetime as dt
+from google.cloud import bigquery
+import re
+import gendata
 
 debug = 'DEBUG' in os.environ
 
@@ -33,10 +35,24 @@ def generate(file, number):
 @click.option("--table_id", "-t", required=True)
 @click.option("--file", "-f", required=True)
 def put(file, table_id):
-    from google.cloud import bigquery
-    import re
     client = bigquery.Client()
-    job_config = bigquery.LoadJobConfig(source_format=bigquery.SourceFormat.PARQUET,)
+
+    # schema = [
+    #     bigquery.SchemaField("id", "STRING"),
+    #     bigquery.SchemaField("name", "STRING"),
+    #     bigquery.SchemaField("attr", "RECORD", mode="NULLABLE", 
+    #             fields= [
+    #                bigquery.SchemaField("user_name", "STRING"),
+    #                bigquery.SchemaField("email", "STRING"),
+    #                bigquery.SchemaField("address", "STRING"),
+    #             ]
+    #         )
+    # ]
+    ## Manual specified schema
+    # job_config = bigquery.LoadJobConfig(source_format=bigquery.SourceFormat.PARQUET, schema=schema)
+
+    # Auto generated schema
+    job_config = bigquery.LoadJobConfig(source_format=bigquery.SourceFormat.PARQUET)
 
     if re.match("^gs://", file):
         uri = file

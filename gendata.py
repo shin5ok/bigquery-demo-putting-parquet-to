@@ -12,7 +12,7 @@ def get(n=10):
             "{i}":{{
                   "id": "{f.uuid4()}",
                   "name": "{f.name()}",
-                  "property": {{
+                  "attr": {{
                       "user_name":"{f.user_name()}",
                       "email":"{f.email()}",
                       "address":"{f.address()}"

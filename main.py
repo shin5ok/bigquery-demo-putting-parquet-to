@@ -40,6 +40,7 @@ def put(file, table_id):
     # schema = [
     #     bigquery.SchemaField("id", "STRING"),
     #     bigquery.SchemaField("name", "STRING"),
+    #     bigquery.SchemaField("update_at", "TIMESTAMP"),
     #     bigquery.SchemaField("attr", "RECORD", mode="NULLABLE", 
     #             fields= [
     #                bigquery.SchemaField("user_name", "STRING"),
@@ -52,7 +53,7 @@ def put(file, table_id):
     # job_config = bigquery.LoadJobConfig(source_format=bigquery.SourceFormat.PARQUET, schema=schema)
 
     # Auto generated schema
-    job_config = bigquery.LoadJobConfig(source_format=bigquery.SourceFormat.PARQUET)
+    job_config = bigquery.LoadJobConfig(source_format=bigquery.SourceFormat.PARQUET, autodetect=True)
 
     if re.match("^gs://", file):
         uri = file

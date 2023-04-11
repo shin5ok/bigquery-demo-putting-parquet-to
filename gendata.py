@@ -1,4 +1,5 @@
 import faker
+from datetime import datetime as dt
 
 def get(n=10):
 
@@ -8,6 +9,7 @@ def get(n=10):
     i = 1
     while n > 0:
 
+        t = dt.now().strftime("%Y%m%dT%H:%M:%S")
         record += f'''
             "{i}":{{
                   "id": "{f.uuid4()}",
@@ -16,7 +18,8 @@ def get(n=10):
                       "user_name":"{f.user_name()}",
                       "email":"{f.email()}",
                       "address":"{f.address()}"
-                  }}
+                  }},
+                  "update_at": "{t}"
               }}'''
 
         i += 1

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 *.sql
 *.parquet
 # Byte-compiled / optimized / DLL files
@@ -154,6 +153,6 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
-=======
-*.sql
->>>>>>> c23db715e30425203f757b0fa1eab217080801e4
+
+# something belongs to others possibly
+*.json

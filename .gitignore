@@ -155,4 +155,4 @@ dmypy.json
 cython_debug/
 
 # something belongs to others possibly
-*.json
+nocommits/

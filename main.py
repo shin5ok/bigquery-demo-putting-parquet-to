@@ -20,10 +20,11 @@ def cli() -> None:
 @cli.command()
 @click.option("--file", "-f")
 @click.option("--number", "-n", default=10)
-def generate(file, number):
+@click.option("--json_path", "-j")
+def generate(file, number, json_path):
     if not file:
         file = dt.now().strftime("%Y%m%dT%H%M%S") + ".parquet"
-    record = gendata.get(number)
+    record = gendata.get(number, json_path)
     df = pd.read_json(record, orient ='index')
     print(df)
     dprint(df.to_json())

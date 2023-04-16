@@ -1,10 +1,7 @@
 import faker
 from datetime import datetime as dt
-import pytz
 
-jst = pytz.timezone('Asia/Tokyo')
-
-def get(n=10):
+def get(n=10, json_path: str = ""):
 
     f = faker.Faker()
     record = '{'
@@ -12,7 +9,7 @@ def get(n=10):
     i = 1
     while n > 0:
 
-        t = dt.now(jst).strftime("%Y%m%dT%H:%M:%S")
+        t = dt.now().strftime("%Y%m%dT%H:%M:%S")
         record += f'''
             "{i}":{{
                   "id": "{f.uuid4()}",
@@ -31,5 +28,9 @@ def get(n=10):
             record += ","
 
     record += '\n   }'
+
+    if json_path:
+        with open(json_path, "w") as f:
+            f.write(record)
 
     return record
